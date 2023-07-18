@@ -1,0 +1,16 @@
+datadir = '/content/drive/MyDrive/model/Image_Testing'
+for i in range(9):
+  i=i+1
+  name='img-'+str(i)+'.jpg'
+  img=imread(os.path.join(datadir,name))
+  plt.imshow(img)
+  plt.show()
+  img_resize=resize(img,(150,150,3))
+  l=[img_resize.flatten()]
+  feature_vector = np.array(l).reshape(-1, 1)
+  # Predict the class of the image
+  predicted_class = svm_model.predict(feature_vector)
+  probability=svm_model.predict_proba(feature_vector)
+  for ind,val in enumerate(Categories):
+    print(f'{val} = {probability[0][ind]*100}%')
+  print("The predicted image is : "+Categories[svm_model.predict(feature_vector)[0]])
